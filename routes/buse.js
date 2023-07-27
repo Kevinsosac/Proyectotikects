@@ -1,10 +1,11 @@
 import { Router } from "express";
 import httpbuses from "../controllers/buse.js";
 import { check } from "express-validator";
-
+import { validarJWT } from "../middelwares/validar.js"
 const router=new Router()
 
 router.get('/bus',[
+    validarJWT,
     check("conductore", "El nombre es obligatorio").not().isEmpty(),
     check("placa", "La placa es obligatoria").not().isEmpty(),
     check("numbus", "El numero de bus es obligatorio").not().isEmpty(),

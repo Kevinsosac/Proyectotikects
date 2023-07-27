@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(   "/buse", buse)
 app.use(   "/cliente", cliente)
 app.use(   "/conductore", conductore)
-app.use(   "/destino", destino)
+app.use(   "/destino", destino) 
 app.use(   "/tikect", tikect)
 app.use(   "/vendedor", vendedor)
 

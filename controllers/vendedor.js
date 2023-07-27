@@ -1,4 +1,6 @@
 import Vendedor from "../models/vendedor.js";
+import bcryptjs from "bcryptjs"
+import { generarJWT } from "../middelwares/validar.js"
 const httpvendedor = {
     getvendedor: async (req, res) => {
         try {
@@ -12,7 +14,7 @@ const httpvendedor = {
     getvendedorcedula: async (req, res) => {
         const { cedula } = req.params
         try {
-            const vendedor = await Vendedorendedor.find({ cedula })
+            const vendedor = await Vendedor.find({ cedula })
             res.json({ vendedor })
 
         } catch (error) {
@@ -23,6 +25,8 @@ const httpvendedor = {
         try {
             const { nombre, cedula, apellido, telefono, usuario, password } = req.body
             const vendedor = new Vendedor({ nombre, cedula, apellido, telefono, usuario, password })
+            const salt = bcryptjs.genSaltSync();
+            vendedor.password = bcryptjs.hashSync(password, salt)
             await vendedor.save()
 
             res.json({ vendedor })
@@ -30,6 +34,7 @@ const httpvendedor = {
             res.status(400).json({ error })
         }
     },
+
     putEditarvendedor: async (req, res) => {
         try {
             const { id } = req.params
@@ -49,10 +54,10 @@ const httpvendedor = {
     },
 
     login: async (req, res) => {
-        const { email, password } = req.body;
+        const { usuario, password } = req.body;
 
         try {
-            const vendedor = await Vendedor.findOne({ email })
+            const vendedor = await Vendedor.findOne({ usuario })
             if (!vendedor) {
                 return res.status(400).json({
                     msg: "vendedor / Password no son correctos"
@@ -72,7 +77,7 @@ const httpvendedor = {
                 })
             }
 
-            const token = await generarJWT(Vendedor.id);
+            const token = await generarJWT(vendedor.id);
 
             res.json({
                 vendedor,
