@@ -20,7 +20,7 @@ const httpconductor = {
     postAgregarconductor: async(req, res) => {
         try {
             const { nombre, cedula, apellido, telefono, edad, rutas} = req.body
-            const conductor = new conductor({nombre, cedula, apellido, telefono, edad, rutas})
+            const conductor = new conductore({nombre, cedula, apellido, telefono, edad, rutas})
             await conductor.save()
             res.json(conductor) 
         } catch (error) {

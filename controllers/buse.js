@@ -2,7 +2,7 @@ import Buse from "../models/buse.js";
 const httpbuses = {
     getbuses: async(req, res) => {
         try {
-            const buses = await buses.find() 
+            const buses = await Buse.find() 
             res.json(buses);
         } catch (error) {
             res.status(400).json(error)
@@ -12,7 +12,7 @@ const httpbuses = {
     getbusesnumbus: async(req, res) => {
         const {numbus} =req.params 
         try {
-            const buses = await buses.find({numbus:numbus}) 
+            const buses = await Buse.find({numbus:numbus}) 
             res.json(buses);
         } catch (error) {
             res.status(400).json(error)
@@ -21,8 +21,8 @@ const httpbuses = {
     },
     postAgregarbus: async(req, res) => {
         try{
-        const {conductore, placa, numbus,estadobus,estado}= req.body;
-         const buse = new Buse({conductore, placa, numbus,estadobus,estado})
+        const {conductore, placa, numbus,estadobus}= req.body;
+        const buse = new Buse({conductore, placa, numbus,estadobus})
         buse.save()
 
         res.json({buse})
@@ -35,7 +35,7 @@ const httpbuses = {
         try {
             const {id} = req.params
         const {placa, numbus} = req.body
-        const buses = await buse.findByIdAndUpdate(id, {placa, numbus}, {new:true})
+        const buses = await Buse.findByIdAndUpdate(id, {placa, numbus}, {new:true})
         res.json({buses})
         } catch (error) {
             res.status(400).json({error})
@@ -44,7 +44,7 @@ const httpbuses = {
     },
     deletebus:async(req, res) => {
         const {numbus}= req.params
-        const buses= buse.findOneAndDelete({numbus:numbus})
+        const buses= Buse.findOneAndDelete({numbus:numbus})
         res.json(buses)
     },
     }

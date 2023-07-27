@@ -15,6 +15,7 @@ router.get('/vendedor',[
 router.get('/vendedor/:cedula', httpvendedor.getvendedorcedula)
 router.post('/agregar',httpvendedor.postAgregarvendedor );
 router.put('/vendedor/:cedula', httpvendedor.putEditarvendedor);
-router.delete('/vendedor/:cedula', httpvendedor.deletevendedor);
+router.delete('/vendedor/:id', httpvendedor.deletevendedor);
+router.get('/login', httpvendedor.login)
 
 export default router

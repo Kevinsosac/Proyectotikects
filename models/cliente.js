@@ -1,6 +1,6 @@
 import mongoose from "mongoose"
 
-const cliente = new mongoose.Schema(
+const Cliente = new mongoose.Schema(
     {
         cedula: {type:String, require:true},
         nombre: {type:String, require:true},
@@ -12,4 +12,4 @@ const cliente = new mongoose.Schema(
     }
 )
 
-export default mongoose.model("Cliente", cliente)
+export default mongoose.model("Cliente", Cliente)

@@ -12,7 +12,7 @@ const httpcliente = {
     getclienteCedula: async (req, res) => {
         const { cedula } = req.params
         try {
-            const cliente = await Clienteliente.find({cedula})
+            const cliente = await Cliente.find({cedula})
             res.json({ cliente })
         } catch (error) {
             res.status(400).json({ error })

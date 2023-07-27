@@ -14,7 +14,7 @@ router.get('/conductor',[
 ], httpconductor.getconductor)
 router.get('/conductor/:cedula', httpconductor.getconductorcedula)
 router.post('/agregar',httpconductor.postAgregarconductor );
-router.put('/conductor/:id', httpconductor.putEditarconductor);
+router.put('/conductor/:cedula', httpconductor.putEditarconductor);
 router.delete('/conductor/:cedula', httpconductor.deleteconductor);
 
 export default router

@@ -11,7 +11,7 @@ router.get('/cliente',[
     check("telefono", "el telefono es obligatorio").not().isEmpty(),
     check("edad", "la edad es obligatoria").not().isEmpty(),
 ], httpcliente.getcliente)
-router.get('/cliente/:cedula', httpcliente.getclientecedula)
+router.get('/cliente/:cedula', httpcliente.getclienteCedula)
 router.post('/agregar',httpcliente.postAgregarcliente );
 router.put('/cliente/:cedula', httpcliente.putEditarcliente);
 router.delete('/cliente/:cedula', httpcliente.deletecliente);
