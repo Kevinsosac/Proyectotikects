@@ -73,7 +73,7 @@ const httpvendedor = {
             const validPassword = bcryptjs.compareSync(password, vendedor.password);
             if (!validPassword) {
                 return res.status(401).json({
-                    msg: "vendedor / Password no son correctos"
+                    msg: "contraseña no son correctos"
                 })
             }
 

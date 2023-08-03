@@ -4,15 +4,14 @@ import { check } from "express-validator";
 import { validarJWT } from "../middelwares/validar.js"
 const router=new Router()
 
-router.get('/bus',[
-    validarJWT,
+router.get('/bus', httpbuses.getbuses)
+router.get('/bus/:numbus', httpbuses.getbusesnumbus)
+router.post('/agregar',[
     check("conductore", "El nombre es obligatorio").not().isEmpty(),
     check("placa", "La placa es obligatoria").not().isEmpty(),
     check("numbus", "El numero de bus es obligatorio").not().isEmpty(),
     check("estadobus", "El estado del bus es obligatorio").not().isEmpty()
-], httpbuses.getbuses)
-router.get('/bus/:numbus', httpbuses.getbusesnumbus)
-router.post('/agregar',httpbuses.postAgregarbus );
+],httpbuses.postAgregarbus );
 router.put('/bus/:numbus', httpbuses.putEditarbus);
 router.delete('/bus/:numbus', httpbuses.deletebus);
 

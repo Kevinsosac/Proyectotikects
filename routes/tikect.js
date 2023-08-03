@@ -4,7 +4,9 @@ import { check } from "express-validator";
 
 const router=new Router()
 
-router.get('/tikect',[
+router.get('/tikect', httptikect.gettikect)
+router.get('/tikect/:id', httptikect.gettikectid)
+router.post('/agregar',[
     check("origen", "el origen es obligatorio").not().isEmpty(),
     check("precio", "el precio es obligatorio").not().isEmpty(),
     check("destino", "el destino es obligatorio").not().isEmpty(),
@@ -12,9 +14,7 @@ router.get('/tikect',[
     check("cliente", "el cliente es obligatorio").not().isEmpty(),
     check("conductor", "el conductor es obligatorio").not().isEmpty(),
     check("vendedor", "el vendedor es obligatorio").not().isEmpty(),
-], httptikect.gettikect)
-router.get('/tikect/:id', httptikect.gettikectid)
-router.post('/agregar',httptikect.postAgregartikect );
+],httptikect.postAgregartikect );
 router.put('/tikect/:id', httptikect.putEditartikect);
 router.delete('/tikect/:id', httptikect.deletetikect);
 
