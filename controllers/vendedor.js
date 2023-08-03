@@ -38,16 +38,41 @@ const httpvendedor = {
     putEditarvendedor: async (req, res) => {
         try {
             const { id } = req.params
-            const vendedor = await Vendedor.findByIdAndUpdate(id, { usuario }, { new: true })
+            const {nombre, apellido, telefono, usuario , password} = req.body
+            const vendedor = await Vendedor.findByIdAndUpdate(id,{nombre, apellido, telefono, usuario , password}, { new: true })
+            const salt = bcryptjs.genSaltSync();
+            vendedor.password = bcryptjs.hashSync(password, salt)
+            await vendedor.save()
             res.json({ vendedor })
         } catch (error) {
             res.status(400).json({ error })
         }
     },
+    putinactivarvendedor: async (req,res)=>{
+        try {
+            const {id}=req.params
+            const vendedor=await Vendedor.findByIdAndUpdate(id,{estado:0},{new:true})
+            res.json({vendedor})
+        } catch (error) {
+            res.status(400).json({error})
+            
+        }
+    },
+    putactivarvendedor: async (req,res)=>{
+        try {
+            const {id}=req.params
+            const vendedor=await Vendedor.findByIdAndUpdate(id,{estado:1},{new:true})
+            res.json({vendedor})
+        } catch (error) {
+            res.status(400).json({error})
+        }
+    },
+
     deletevendedor: async (req, res) => {
         try {
             const { id } = req.params
             const vendedor = await Vendedor.findByIdAndDelete(id)
+            res.json({vendedor})
         } catch (error) {
             res.status(400).json({ error })
         }

@@ -12,7 +12,11 @@ const httptikect = {
     gettikectid: async (req, res) =>{
         try {
             const {id} = req.params
-            const Tikect = await tikect.find({id:id})
+            const Tikect = await tikect.findById(id).populate("buse", ["placa", "numbus"]
+            ).populate("destino", ["nombre"]
+            ).populate("cliente", ["nombre", "telefono"]
+            ).populate("conductor", ["nombre", "telefono"]
+            ).populate("vendedor", ["nombre", "telefono"])
             res.json({Tikect})
         } catch (error) {
             res.status(400).json({error})
@@ -21,9 +25,11 @@ const httptikect = {
 
     postAgregartikect: async (req, res) =>{
         try {
-            const {origen, destino, precio, buse, cliente, conductor,vendedor } = res.body
+            const {origen, destino, precio, buse, cliente, conductor,vendedor } = req.body
             const Tikect = new tikect({origen, destino, precio, buse, cliente, conductor,vendedor})
             await Tikect.save()
+
+        
         } catch (error) {
             res.status(400).json({error})
         }
