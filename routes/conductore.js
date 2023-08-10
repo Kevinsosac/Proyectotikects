@@ -22,10 +22,12 @@ router.post('/agregar',[
 router.put('/conductor/:cedula',[
     validarJWT,
     check("cedula", "la cedula es obligatoria").not().isEmpty(),
+    validarCampos
 ], httpconductor.putEditarconductor);
 router.delete('/conductor/:cedula',[
     validarJWT,
     check("cedula", "la cedula es obligatoria").not().isEmpty(),
+    validarCampos
 ], httpconductor.deleteconductor);
 
 export default router

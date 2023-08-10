@@ -6,7 +6,10 @@ import validarCampos from "../middelwares/validator.js";
 const router=new Router()
 
 router.get('/bus', httpbuses.getbuses)
-router.get('/bus/:numbus', httpbuses.getbusesnumbus)
+router.get('/bus/:numbus',[
+    check("numbus", "El numero de bus es obligatorio").not().isEmpty(),
+    validarCampos
+], httpbuses.getbusesnumbus)
 router.post('/agregar',[
     check("conductore", "El nombre es obligatorio").not().isEmpty(),
     check("placa", "La placa es obligatoria").not().isEmpty(),
@@ -19,7 +22,10 @@ router.put('/bus/:numbus',[
     check("numbus", "Digite el numero del bus").not().isEmpty(),
     validarJWT
 ], httpbuses.putEditarbus);
-router.delete('/bus/:numbus', httpbuses.deletebus);
+router.delete('/bus/:numbus',[
+    check("numbus", "El numero de bus es obligatorio").not().isEmpty(),
+    validarCampos
+], httpbuses.deletebus);
 
 export default router  
     

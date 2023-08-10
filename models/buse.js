@@ -4,6 +4,7 @@ const Buse = new mongoose.Schema(
     {
         conductore: {type:mongoose.Schema.Types.ObjectId, ref:'conductore', require:true},
         placa: {type:String, require:true},
+        rutas: {type:mongoose.Schema.Types.ObjectId, ref:'conductore', require:true},
         numbus: {type:String, require:true},
         estadobus: {type:String, require:true},
         createAd: {type:Date, default:Date.now},
@@ -12,4 +13,4 @@ const Buse = new mongoose.Schema(
     }
 )
 
-export default mongoose.model("buse", Buse)
+export default mongoose.model("Buse", Buse)

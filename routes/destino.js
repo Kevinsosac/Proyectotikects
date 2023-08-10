@@ -10,11 +10,18 @@ router.get('/destino', httpdestino.getdestino)
 router.get('/destino/:cedula', httpdestino.getdestinocedula)
 router.post('/agregar',[
     check("nombre", "el nombre es obligatorio").not().isEmpty(),
-    check("horasalida", "la horasalida es obligatoria").not().isEmpty(),
-    check("horallegada", "la horallegada es obligatoria").not().isEmpty(),
     validarCampos
 ],httpdestino.postAgregardestino );
-router.put('/destino/:cedula',[validarJWT], httpdestino.putEditardestino);
-router.delete('/destino/:cedula', httpdestino.deletedestino);
+router.put('/destino/:cedula',[
+    validarJWT,
+    check("cedula", "la cedula es obligatoria").not().isEmpty(),
+    validarCampos
+], httpdestino.putEditardestino);
+router.delete('/destino/:cedula',[
+    validarJWT,
+    check("cedula", "la cedula es obligatoria").not().isEmpty(),
+    validarCampos
+
+], httpdestino.deletedestino);
 
 export default router

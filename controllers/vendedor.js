@@ -1,6 +1,7 @@
 import Vendedor from "../models/vendedor.js";
 import bcryptjs from "bcryptjs"
 import { generarJWT } from "../middelwares/validar.js"
+import tikect from "../models/tikect.js";
 const httpvendedor = {
     getvendedor: async (req, res) => {
         try {

@@ -8,6 +8,9 @@ const router=new Router()
 
 router.get('/tikect', httptikect.gettikect)
 router.get('/tikect/:id', httptikect.gettikectid)
+router.get("/tikects/horas", httptikect.getTikectsByDateRange);
+router.get("/tikects/vendedor/:vendedor_id", httptikect.getticketsPorVendedor);
+router.get("/tikects/:id", httptikect.getRutasDeConductorPorId);
 router.post('/agregar',[
     check("origen", "el origen es obligatorio").not().isEmpty(),
     check("precio", "el precio es obligatorio").not().isEmpty(),
@@ -23,6 +26,11 @@ router.put('/tikect/:id',[
     check("id", "Digite id").not().isEmpty(),
     check("id", "Digite id").isMongoId(),
     validarJWT], httptikect.putEditartikect);
-router.delete('/tikect/:id', httptikect.deletetikect);
+router.delete('/tikect/:id',[
+    validarJWT,
+    check("id", "Digite id").not().isEmpty(),
+    check("id", "Digite id").isMongoId(),
+    validarCampos
+], httptikect.deletetikect);
 
 export default router
