@@ -12,7 +12,7 @@ const httpbuses = {
     getbusesnumbus: async(req, res) => {
         const {numbus} =req.params 
         try {
-            const buses = await Buse.find({numbus:numbus}) 
+            const buses = await Buse.find({numbus:numbus}).populate("conductor", ['nombre', 'cedula'])
             res.json(buses);
         } catch (error) {
             res.status(400).json(error)

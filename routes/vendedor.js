@@ -15,9 +15,11 @@ router.post('/agregar',[
     check("apellido", "el apellido es obligatorio").not().isEmpty(),
     check("telefono", "el telefono es obligatorio").not().isEmpty(),
     check("usuario", "el usuario es obligatorio").not().isEmpty(),
-    check("contraseña", "la contraseña es obligatoria").not().isEmpty(),
+    check("password", "la contraseña es obligatoria").not().isEmpty(),
+    validarCampos
 ],httpvendedor.postAgregarvendedor );
 router.put('/vendedor/:id',[
+    validarCampos,
     check("id","Digite ID").not().isEmpty(),
     check("id","Digite ID").isMongoId(),
     validarJWT

@@ -1,6 +1,8 @@
 import { Router } from "express";
 import httpcliente from "../controllers/cliente.js";
 import { check } from "express-validator";
+import validarCampos from "../middelwares/validator.js";
+import { validarJWT } from "../middelwares/validar.js";
 
 const router=new Router()
 
@@ -12,8 +14,9 @@ router.post('/agregar',[
     check("apellido", "el apellido es obligatorio").not().isEmpty(),
     check("telefono", "el telefono es obligatorio").not().isEmpty(),
     check("edad", "la edad es obligatoria").not().isEmpty(),
+    validarCampos
 ],httpcliente.postAgregarcliente );
-router.put('/cliente/:cedula', httpcliente.putEditarcliente);
+router.put('/cliente/:cedula',[validarJWT], httpcliente.putEditarcliente);
 router.delete('/cliente/:cedula', httpcliente.deletecliente);
 
 export default router
