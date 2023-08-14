@@ -1,29 +1,29 @@
 import tikect from "../models/tikect.js";
 const httptikect = {
-    gettikect: async (req, res) =>{
+    gettikect: async (req, res) => {
         try {
             const Tikect = await tikect.find().populate("buse", ["placa", "numbus"]
             ).populate("destino", ["nombre"]
             ).populate("cliente", ["nombre", "telefono"]
             ).populate("conductor", ["nombre", "telefono"]
             ).populate("vendedor", ["nombre", "telefono"])
-            res.json({Tikect})
+            res.json({ Tikect })
         } catch (error) {
-            res.status(400).json({error})
+            res.status(400).json({ error })
         }
     },
 
-    gettikectid: async (req, res) =>{
+    gettikectid: async (req, res) => {
         try {
-            const {id} = req.params
+            const { id } = req.params
             const Tikect = await tikect.findById(id).populate("buse", ["placa", "numbus"]
             ).populate("destino", ["nombre"]
             ).populate("cliente", ["nombre", "telefono"]
             ).populate("conductor", ["nombre", "telefono"]
             ).populate("vendedor", ["nombre", "telefono"])
-            res.json({Tikect})
+            res.json({ Tikect })
         } catch (error) {
-            res.status(400).json({error})
+            res.status(400).json({ error })
         }
     },
     getTikectsByDateRange: async (req, res) => { //listar por fechas
@@ -52,9 +52,9 @@ const httptikect = {
             if (!vendedor_id) {
                 return res.status(400).json({ error: 'Debes proporcionar el ID del vendedor.' });
             }
-    
+
             const tickets = await tikect.find({ vendedor: vendedor_id })
-    
+
             res.json({ tickets });
         } catch (error) {
             res.status(400).json({ error: "Algo salió mal" });
@@ -80,38 +80,62 @@ const httptikect = {
         }
     },
 
-    postAgregartikect: async (req, res) =>{
+    getGananciasPorFecha: async (req, res) => {
         try {
-            const {origen, destino, precio, buse, cliente, conductor,vendedor } = req.body
-            const Tikect = new tikect({origen, destino, precio, buse, cliente, conductor,vendedor})
-            await Tikect.save()
-
-        
+            const { startDate, endDate } = req.query;
+    
+            if (!startDate || !endDate) {
+                return res.status(400).json({ error: 'Debes proporcionar las fechas de inicio y fin.' });
+            }
+    
+            const tickets = await tikect.find({
+                fechacreacion: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate),
+                }
+            });
+    
+            // Calculate ganancia por fecha
+            const totalGanancias = tickets.reduce((total, tikect) => total + tikect.precio, 0);
+    
+            res.json({ totalGanancias });
         } catch (error) {
-            res.status(400).json({error})
+            res.status(400).json({ error: "Algo salió mal" });
         }
     },
+    
+postAgregartikect: async (req, res) => {
+    try {
+        const { origen, destino, precio, buse, cliente, conductor, vendedor } = req.body
+        const Tikect = new tikect({ origen, destino, precio, buse, cliente, conductor, vendedor })
+        await Tikect.save()
 
-    putEditartikect: async (req, res) =>{
-        try {
-            const {id} = req. params
-            const {origen, destino} = req.body
-            const Tikect = await tikect.findByIdAndUpdate(id, {origen, destino}, {new:true})
-            res.json({Tikect})
-        } catch (error) {
-            res.status(400).json({error})
-        }
-    },
 
-    deletetikect: async (req, res) =>{
-        try {
-            const {id} = req.params
-            const Tikect = await tikect.findByIdAndDelete(id)
-            res.json({Tikect})
-        } catch (error) {
-            res.status(400).json({error})
-        }
+    } catch (error) {
+        res.status(400).json({ error })
     }
+},
+
+    putEditartikect: async (req, res) => {
+        try {
+            const { id } = req.params
+            const { origen, destino } = req.body
+            const Tikect = await tikect.findByIdAndUpdate(id, { origen, destino }, { new: true })
+            res.json({ Tikect })
+        } catch (error) {
+            res.status(400).json({ error })
+        }
+    },
+
+        deletetikect: async (req, res) => {
+            try {
+                const { id } = req.params
+                const Tikect = await tikect.findByIdAndDelete(id)
+                res.json({ Tikect })
+            } catch (error) {
+                res.status(400).json({ error })
+            }
+        }
 
 
 }

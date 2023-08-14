@@ -11,6 +11,7 @@ router.get('/tikect/:id', httptikect.gettikectid)
 router.get("/tikects/horas", httptikect.getTikectsByDateRange);
 router.get("/tikects/vendedor/:vendedor_id", httptikect.getticketsPorVendedor);
 router.get("/tikects/:id", httptikect.getRutasDeConductorPorId);
+router.get("/tikects/", httptikect.getGananciasPorFecha)
 router.post('/agregar',[
     check("origen", "el origen es obligatorio").not().isEmpty(),
     check("precio", "el precio es obligatorio").not().isEmpty(),
