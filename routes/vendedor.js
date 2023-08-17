@@ -27,13 +27,13 @@ router.put('/vendedor/:id',[
     check("id","Digite ID").isMongoId(),
     validarJWT
 ], httpvendedor.putEditarvendedor);
-router.put('vendedor/:id',[
+router.put('vendedor/in/:id',[
     validarJWT,
     check("id","Digite ID").not().isEmpty(),
     check("id","Digite ID").isMongoId(),
     validarCampos
 ], httpvendedor.putinactivarvendedor)
-router.put('vendedor/in/:id',[
+router.put('vendedor/ac/:id',[
     check("id","Digite ID").not().isEmpty(),
     check("id","Digite ID").isMongoId(),
     validarCampos
