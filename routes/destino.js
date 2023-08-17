@@ -7,19 +7,19 @@ import { validarJWT } from "../middelwares/validar.js";
 const router=new Router()
 
 router.get('/destino', httpdestino.getdestino)
-router.get('/destino/:cedula', httpdestino.getdestinocedula)
+router.get('/destino/:nombre', httpdestino.getdestinonombre)
 router.post('/agregar',[
     check("nombre", "el nombre es obligatorio").not().isEmpty(),
     validarCampos
 ],httpdestino.postAgregardestino );
-router.put('/destino/:cedula',[
+router.put('/destino/:id',[
     validarJWT,
-    check("cedula", "la cedula es obligatoria").not().isEmpty(),
+    check("id", "la id es obligatoria").not().isEmpty(),
     validarCampos
 ], httpdestino.putEditardestino);
-router.delete('/destino/:cedula',[
+router.delete('/destino/:id',[
     validarJWT,
-    check("cedula", "la cedula es obligatoria").not().isEmpty(),
+    check("id", "la id es obligatoria").not().isEmpty(),
     validarCampos
 
 ], httpdestino.deletedestino);

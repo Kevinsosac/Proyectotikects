@@ -10,7 +10,7 @@ const httpdestino = {
             res.status(400).json({ error })
         }
     },
-    getdestinocedula: async (req, res) => {
+    getdestinonombre: async (req, res) => {
         const { nombre } = req.params
         try {
             const destino = await Destino.find({ nombre })
