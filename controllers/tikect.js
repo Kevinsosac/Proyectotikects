@@ -103,30 +103,6 @@ const httptikect = {
         }
     },
     
-
-    getGananciasPorFecha: async (req, res) => {
-        try {
-            const { startDate, endDate } = req.query;
-    
-            if (!startDate || !endDate) {
-                return res.status(400).json({ error: 'Debes proporcionar las fechas de inicio y fin.' });
-            }
-    
-            const tickets = await tikect.find({
-                fechacreacion: {
-                    $gte: new Date(startDate),
-                    $lte: new Date(endDate),
-                }
-            });
-    
-            // Calculate ganancia por fecha
-            const totalGanancias = tickets.reduce((total, tikect) => total + tikect.precio, 0);
-    
-            res.json({ totalGanancias });
-        } catch (error) {
-            res.status(400).json({ error: "Algo salió mal" });
-        }
-    },
     
 postAgregartikect: async (req, res) => {
     try {
