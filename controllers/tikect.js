@@ -26,18 +26,18 @@ const httptikect = {
             res.status(400).json({error})
         }
     },
-    getTikectsByDateRange: async (req, res) => { //listar por fechas
+    getTikectsporfechas: async (req, res) => { //listar por fechas
         try {
-            const { startDate, endDate } = req.query;
+            const { fechaInicial, fechaFinal } = req.query;
 
-            if (!startDate || !endDate) {
+            if (!fechaInicial || !fechaFinal) {
                 return res.status(400).json({ error: 'Debes proporcionar las fechas de inicio y fin.' });
             }
 
             const tickets = await tikect.find({
                 fechacreacion: {
-                    $gte: new Date(startDate),
-                    $lte: new Date(endDate),
+                    $gte: new Date(fechaInicial),
+                    $lte: new Date(fechaFinal),
                 }
             });
 
@@ -79,6 +79,30 @@ const httptikect = {
             res.status(400).json({ error });
         }
     },
+    getGananciasPorFecha: async (req, res) => {
+        try {
+            const { fechaInicial, fechaFinal } = req.query;
+    
+            if (!fechaInicial || !fechaFinal) {
+                return res.status(400).json({ error: 'Debes proporcionar las fechas de inicio y fin.' });
+            }
+    
+            const tickets = await tikect.find({
+                fechacreacion: {
+                    $gte: new Date(fechaInicial),
+                    $lte: new Date(fechaFinal),
+                }
+            });
+    
+            // Calculate ganancia por fecha
+            const totalGanancias = tickets.reduce((total, tikect) => total + tikect.precio, 0);
+    
+            res.json({ totalGanancias });
+        } catch (error) {
+            res.status(400).json({ error: "Algo salió mal" });
+        }
+    },
+    
 
     postAgregartikect: async (req, res) =>{
         try {
