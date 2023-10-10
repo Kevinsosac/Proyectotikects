@@ -7,8 +7,10 @@ import conductore from "./routes/conductore.js"
 import destino from "./routes/destino.js"
 import tikect from "./routes/tikect.js"
 import vendedor from "./routes/vendedor.js";
+import cors from "cors"
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 app.use(   "/buse", buse)
 app.use(   "/cliente", cliente)
